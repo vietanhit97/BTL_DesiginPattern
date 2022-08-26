@@ -1,6 +1,4 @@
-
 import java.util.Scanner;
-
 public class Program {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
@@ -36,7 +34,7 @@ public class Program {
 						check1 = true;
 						break;
 					default:
-						System.err.println("vui long chon tu 1 ->4");
+						System.err.println("vui long chon tu 1 ->5");
 						break;
 					}
 					if (check1) {
@@ -71,7 +69,7 @@ public class Program {
 						check2 = true;
 						break;
 					default:
-						System.err.println("vui long chon tu 1 ->4");
+						System.err.println("vui long chon tu 1 ->5");
 						break;
 					}
 					if (check2) {
