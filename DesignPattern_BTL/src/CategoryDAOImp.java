@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CategoryDAOImp implements GeneralDAO<Category> {
 	private static List<Category> data = new ArrayList<Category>();
-	private static final CategoryDAOImp instance = new CategoryDAOImp();
+	private static CategoryDAOImp instance = new CategoryDAOImp();
 
 	private CategoryDAOImp() {
 	}
@@ -37,7 +37,9 @@ public class CategoryDAOImp implements GeneralDAO<Category> {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}finally {
+            JDBCUtil.closeConnection(connection);
+        }
 		return data;
 	}
 
@@ -62,7 +64,9 @@ public class CategoryDAOImp implements GeneralDAO<Category> {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}finally {
+            JDBCUtil.closeConnection(connection);
+        }
 		return data;
 	}
 
@@ -71,30 +75,23 @@ public class CategoryDAOImp implements GeneralDAO<Category> {
 		Category ketQua = null;
 		Connection con = JDBCUtil.getConnection();
 		try {
-			// Bước 1: tạo kết nối đến CSDL
-			
-			// Bước 2: tạo ra đối tượng statement
 			String sql = "SELECT * FROM Category where id=?";
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setInt(1, c.id);
-			// Bước 3: thực thi câu lệnh SQL
-			System.out.println(sql);
 			ResultSet rs = st.executeQuery();
-			
-			// Bước 4:
 			while(rs.next()) {
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				boolean status = rs.getBoolean("status");		
 				ketQua = new Category(id, name, status);
 			}
-			
-			// Bước 5:
 			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}finally {
+            JDBCUtil.closeConnection(con);
+        }
 		return ketQua;
 	}
 
@@ -102,7 +99,7 @@ public class CategoryDAOImp implements GeneralDAO<Category> {
 	public boolean add(Category entity) {
 		boolean bl = false;
 		Connection connection = JDBCUtil.getConnection();
-		ResultSet rSet = null;
+		
 		PreparedStatement pstmt=null;
 		try {
 			pstmt=connection.prepareStatement("insert into Category values (?,?,?)");
@@ -119,7 +116,9 @@ public class CategoryDAOImp implements GeneralDAO<Category> {
 			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}finally {
+            JDBCUtil.closeConnection(connection);
+        }
 		return bl;
 		
 	}
@@ -128,7 +127,6 @@ public class CategoryDAOImp implements GeneralDAO<Category> {
 	public boolean edit(Category entity) {
 		boolean bl = false;
 		Connection connection = JDBCUtil.getConnection();
-		ResultSet rSet = null;
 		PreparedStatement pstmt=null;
 		try {
 			pstmt=connection.prepareStatement("update Category set name=?,status=? where id =?");
@@ -145,7 +143,9 @@ public class CategoryDAOImp implements GeneralDAO<Category> {
 			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}finally {
+            JDBCUtil.closeConnection(connection);
+        }
 		return bl;
 	}
 
@@ -153,7 +153,6 @@ public class CategoryDAOImp implements GeneralDAO<Category> {
 	public boolean remove(Category entity) {
 		boolean bl = false;
 		Connection connection = JDBCUtil.getConnection();
-		ResultSet rSet = null;
 		PreparedStatement pstmt=null;
 		try {
 			pstmt=connection.prepareStatement("delete from Category where id =?");
@@ -168,7 +167,9 @@ public class CategoryDAOImp implements GeneralDAO<Category> {
 			connection.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}finally {
+            JDBCUtil.closeConnection(connection);
+        }
 		return bl;
 	}
 

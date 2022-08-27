@@ -30,4 +30,12 @@ public class JDBCUtil {
 		}
 
 	}
+	public static void closeConnection(Connection con) {
+        if (con != null)
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+    }
 }

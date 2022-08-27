@@ -1,16 +1,13 @@
-import java.util.Locale.Category;
+
 
 public class DAOFactory<T> {
-	
-	public GeneralDAO getDao(Class<T> _clClass) {
-		switch () {
-		case _clClass:
+	public GeneralDAO getDao(String type) {
+		if(type.equalsIgnoreCase("Category")) {
 			return CategoryDAOImp.getInstance();
-		
-		
-		
-		default :
-		throw new IllegalArgumentException("Unexpected value: " + _clClass);
+		}else if (type.equalsIgnoreCase("Product")) {
+			return ProductDAPImp.getInstance();
+		}else {
+			return null;
 		}
 	}
 
