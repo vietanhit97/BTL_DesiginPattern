@@ -1,7 +1,11 @@
+import java.util.List;
+import java.util.Locale.Category;
 import java.util.Scanner;
 public class Program {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
+		DAOFactory daoFactory = new DAOFactory();
+		GeneralDAO<Category> GDCategory = daoFactory.getDao();
 		while (true) {
 			System.out.println("1. Quản lý danh mục\r\n" + "2. Quản lý sản phẩm\r\n" + "3.Thoát\r\n" + "");
 			System.out.println("Chọn chức năng 1 -> 3 :");
@@ -20,6 +24,10 @@ public class Program {
 					switch (chonDM) {
 					case 1:
 						System.out.println("1. Hiển thị d/s danh mục sắp xếp theo tên A-Z (status hiển thị ẩn/hiện) ");
+						List<Category> categories = GDCategory.get();
+						for (Category category : categories) {
+							
+						}
 						break;
 					case 2:
 						System.out.println("2. Thêm mới danh mục");
