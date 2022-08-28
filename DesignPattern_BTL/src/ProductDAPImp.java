@@ -147,7 +147,7 @@ public class ProductDAPImp implements GeneralDAO<Product> {
 		Connection connection = JDBCUtil.getConnection();
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = connection.prepareStatement("update Product set name=?,price=?,category=?,status=? where id =?");
+			pstmt = connection.prepareStatement("update Product set name=?,price=?,categoryId=?,status=? where id =?");
 			pstmt.setString(1, entity.getName());
 			pstmt.setFloat(2, entity.getPrice());
 			pstmt.setInt(3, entity.getCategoryId());

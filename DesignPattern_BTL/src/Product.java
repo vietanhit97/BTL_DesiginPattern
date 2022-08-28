@@ -12,6 +12,11 @@ public class Product {
 
 	}
 
+	public Product(String id) {
+		super();
+		this.id = id;
+	}
+
 	public Product(String id, String name, float price, int categoryId, boolean status) {
 		this.id = id;
 		this.name = name;
@@ -28,7 +33,7 @@ public class Product {
 		try {
 			for (Product item : ProductDAPImp.getdata()) {
 				if (item.getId().equalsIgnoreCase(productId)) {
-					System.err.println("ma san pham da ton tai !!! (nhap lai): ");
+					System.err.println("id san pham da ton tai !!! (nhap lai): ");
 					return false;
 				}
 			}
@@ -36,11 +41,11 @@ public class Product {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (productId.length() > 0) {
+		if (productId.length() >0) {
 			this.id = productId;
 			return true;
 		} else {
-			System.err.println("ma sản phẩm không được để trống ! ");
+			System.err.println("id sản phẩm không được để trống ! ");
 			return false;
 		}
 	}
@@ -51,11 +56,11 @@ public class Product {
 
 	public boolean setProductName(String productName) {
 
-		if (productName.length() > 0) {
+		if (productName.length() > 3 && productName.length()<=30) {
 			this.name = productName;
 			return true;
 		} else {
-			System.err.println("tên sản phẩm không được để trống !  ");
+			System.err.println("tên sản phẩm nhập từ 6 -> 30 kí tự !  ");
 			return false;
 		}
 	}
@@ -78,8 +83,9 @@ public class Product {
 		return categoryId;
 	}
 
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+	public boolean setCategoryId(int categoryId) {
+		this.categoryId=categoryId;
+		return true;
 	}
 
 	public boolean isStatus() {
@@ -92,7 +98,7 @@ public class Product {
 
 	public void inputData() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("nhap id san pham : ");
+		System.out.println("Nhập id sản phẩm  : ");
 		while (true) {
 			String reProductId = sc.nextLine();
 			boolean check = setProductId(reProductId);
@@ -100,7 +106,7 @@ public class Product {
 				break;
 			}
 		}
-		System.out.println("nhap ten san pham : ");
+		System.out.println("Nhập tên sản phẩm : ");
 		while (true) {
 			String reProductName = sc.nextLine();
 			boolean check = setProductName(reProductName);
@@ -108,7 +114,7 @@ public class Product {
 				break;
 			}
 		}
-		System.out.println("nhap gia nhap san pham : ");
+		System.out.println("Nhập giá sản phẩm : ");
 		while (true) {
 			try {
 				float reImportPrice = Float.parseFloat(sc.nextLine());
@@ -119,19 +125,65 @@ public class Product {
 			} catch (Exception e) {
 				System.err.println("nhap khong dung dinh dang !!! (nhap lai): ");
 			}
-
-			System.out.println("nhap trang thai san pham : ");
-			String reStatus = sc.nextLine();
-			this.status = Boolean.parseBoolean(reStatus);
-			while (!(reStatus.equalsIgnoreCase("true") || reStatus.equalsIgnoreCase("false"))) {
-				System.err.println("nhap true hoac false (nhap lai) : ");
-				reStatus = sc.nextLine();
-				this.status = Boolean.parseBoolean(reStatus);
+		}
+		System.out.println("Nhập id danh mục sản phẩm :");
+		while (true) {
+			int categoryId = sc.nextInt();
+			boolean check = setCategoryId(categoryId);
+			if (check) {
+				break;
 			}
 		}
+		System.out.println("nhap trang thai san pham : ");
+		String reStatus = sc.nextLine();
+		this.status = Boolean.parseBoolean(reStatus);
+		while (!(reStatus.equalsIgnoreCase("true") || reStatus.equalsIgnoreCase("false"))) {
+			System.err.println("nhap true hoac false (nhap lai) : ");
+			reStatus = sc.nextLine();
+			this.status = Boolean.parseBoolean(reStatus);
+		}
 	}
-
+	public void inputDataUpdate() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Nhập tên sản phẩm cập nhật mới: ");
+		while (true) {
+			String reProductName = sc.nextLine();
+			boolean check = setProductName(reProductName);
+			if (check) {
+				break;
+			}
+		}
+		System.out.println("Nhập giá sản phẩm cập nhật mới: ");
+		while (true) {
+			try {
+				float reImportPrice = Float.parseFloat(sc.nextLine());
+				boolean check = setPrice(reImportPrice);
+				if (check) {
+					break;
+				}
+			} catch (Exception e) {
+				System.err.println("Nhập không đúng định dạng !!! (Nhập lại): ");
+			}
+		}
+		System.out.println("Nhập id danh mục sản phẩm cập nhật mới:");
+		while (true) {
+			int categoryId = sc.nextInt();
+			boolean check = setCategoryId(categoryId);
+			if (check) {
+				break;
+			}
+		}
+		System.out.println("Nhập trạng thái sản phẩm cập nhật mới : ");
+		String reStatus = sc.nextLine();
+		this.status = Boolean.parseBoolean(reStatus);
+		while (!(reStatus.equalsIgnoreCase("true") || reStatus.equalsIgnoreCase("false"))) {
+			System.err.println("Nhập true hoặc false (Nhập lại) : ");
+			reStatus = sc.nextLine();
+			this.status = Boolean.parseBoolean(reStatus);
+		}
+	}
 	String S = "";
+
 	public String Status(boolean prdStatus) {
 		if (prdStatus) {
 			S = "Hiện";
@@ -140,15 +192,14 @@ public class Product {
 		}
 		return S;
 	}
+
 	public void displayData() {
-		System.out.println(
-				  "+-------------------+------------------+------------------+\r\n"
+		System.out.println("+-------------------+------------------+------------------+\r\n"
 				+ "| ID                | Name             | Price            | CategoryID         | Status           |\r\n"
-				+ "+-------------------+------------------+------------------+\r\n"
-				+ "|"+this.id+"                  |"+ this.name+"                |"+this.price+"             |"+this.categoryId+"             |"+Status(status)+"             |\r\n"
-				+ "+-------------------+------------------+------------------+\r\n"
-				+ "");
+				+ "+-------------------+------------------+------------------+\r\n" + "|" + this.id
+				+ "                  |" + this.name + "                |" + this.price + "             |"
+				+ this.categoryId + "             |" + Status(status) + "             |\r\n"
+				+ "+-------------------+------------------+------------------+\r\n" + "");
 	}
 
-	
 }

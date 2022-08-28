@@ -94,7 +94,26 @@ public class Category {
 		}
 
 	}
+	public void inputDataUpdate() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Nhập tên danh mục cập nhật mới : ");
+		while (true) {
+			String reCatalogName = sc.nextLine();
+			boolean check = setName(reCatalogName);
+			if (check) {
+				break;
+			}
+		}
+		System.out.println("Nhập trạng thái danh mục cập nhật mới : ");
+		String reStatus = sc.nextLine();
+		this.status = Boolean.parseBoolean(reStatus);
+		while (!(reStatus.equalsIgnoreCase("true") || reStatus.equalsIgnoreCase("false"))) {
+			System.err.println("nhap true hoac false (nhap lai) : ");
+			reStatus = sc.nextLine();
+			this.status = Boolean.parseBoolean(reStatus);
+		}
 
+	}
 	String S = "";
 
 	public String Status(boolean prdStatus) {
@@ -110,6 +129,8 @@ public class Category {
 		System.out.println("+-------------------+------------------+------------------+\r\n"
 				+ "| ID                | Name             | Status           |\r\n"
 				+ "+-------------------+------------------+------------------+\r");
+
+
 	}
 
 	public void ketQua() {

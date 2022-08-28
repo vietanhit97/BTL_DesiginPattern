@@ -1,12 +1,13 @@
-import java.util.Iterator;
+
+import java.security.DrbgParameters.NextBytes;
 import java.util.List;
 import java.util.Scanner;
 public class Program {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		DAOFactory<?> daoFactory = new DAOFactory();
-		GeneralDAO<Product> GDProduct = daoFactory.getDao("Product");
-		GeneralDAO<Category> GDCategory = daoFactory.getDao("Category");
+		GeneralDAO<Product> GDProduct = daoFactory.getDao(ClassName.Product);
+		GeneralDAO<Category> GDCategory = daoFactory.getDao(ClassName.Category);
 		Product pdProduct = new Product();
 		Category cCategory = new Category();
 		while (true) {
@@ -39,7 +40,7 @@ public class Program {
 						break;
 					case 3:
 						System.out.println("3. Cập nhật danh mục");
-						System.out.println("Nhap ma san pham can cap nhat:");
+						System.out.println("Nhập id danh mục cần cập nhật:");
 	                    int cId = scanner.nextInt();
 	                    scanner.nextLine();
 	                    Category categorUpdate = new Category(cId);
@@ -47,16 +48,13 @@ public class Program {
 //	                    if (cUpdate == null) {
 //	                        System.out.println("Ma san pham nay khong ton tai");
 //	                    } else {
-	                        System.out.println("Nhap ten danh muc can cap nhat:");
-	                        categorUpdate.setName(scanner.nextLine());
-	                        System.out.println("Nhap trang thai danh muc can cap nhat:");
-	                        categorUpdate.setStatus(Boolean.parseBoolean(scanner.nextLine()));
+	                    	categorUpdate.inputDataUpdate();
 	                        GDCategory.edit(categorUpdate);
 //	                    }
 						break;
 					case 4:
 						System.out.println("4. Xóa danh mục");
-						System.out.println("Nhap ma Danh muc can xoa :");
+						System.out.println("Nhập id danh mục cần xóa :");
 						int xoa = scanner.nextInt();
 						Category xoaCategory = new Category(xoa);
 						GDCategory.remove(xoaCategory);
@@ -93,12 +91,28 @@ public class Program {
 						break;
 					case 2:
 						System.out.println("2. Thêm mới sản phẩm\r\n");
+						pdProduct.inputData();
+						GDProduct.add(pdProduct);
 						break;
 					case 3:
 						System.out.println("3. Cập nhật thông tin sản phẩm \r\n");
+						System.out.println("Nhập id sản phẩm cần cập nhật:");
+	                    String pId = scanner.nextLine();
+	                    Product productUpdate = new Product(pId);
+//	                    Category cUpdate = GDCategory.findId(categorUpdate);
+//	                    if (cUpdate == null) {
+//	                        System.out.println("Ma san pham nay khong ton tai");
+//	                    } else {
+	                        productUpdate.inputDataUpdate();
+	                        GDProduct.edit(productUpdate);
+//	                    }
 						break;
 					case 4:
-						System.out.println("4. Xóa sản phẩm \r\n");
+						System.out.println("4. Xóa sản phẩm \r\n");		
+						System.out.println("Nhập id danh mục cần xóa :");
+						String xoa = scanner.nextLine();
+						Product xoaProduct = new Product(xoa);
+						GDProduct.remove(xoaProduct);
 						break;
 					case 5:
 						check2 = true;

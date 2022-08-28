@@ -1,15 +1,15 @@
 
-
 public class DAOFactory<T> {
-	public GeneralDAO getDao(String type) {
-		if(type.equalsIgnoreCase("Category")) {
+	public GeneralDAO getDao(ClassName type) {
+		switch (type) {
+		case Category:
 			return CategoryDAOImp.getInstance();
-		}else if (type.equalsIgnoreCase("Product")) {
+
+		case Product:
 			return ProductDAPImp.getInstance();
-		}else {
+		default:
 			return null;
 		}
 	}
 
-	
 }
